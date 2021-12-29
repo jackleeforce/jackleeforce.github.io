@@ -1,23 +1,1282 @@
-{% extends '_layout.swig' %}
-{% import '_macro/post.swig' as post_template %}
-{% import '_macro/sidebar.swig' as sidebar_template %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
 
-{% block title %}{{ title }}{% if theme.index_with_subtitle and subtitle %} – {{ subtitle }}{% endif %}{% endblock %}
+<link rel="stylesheet" href="/css/main.css">
 
-{% block page_class %}
-  {% if is_home() %}page-home{% endif -%}
-{% endblock %}
 
-{% block content %}
-  <section id="posts" class="posts-expand">
-    {% for post in page.posts %}
-      {{ post_template.render(post, true) }}
-    {% endfor %}
-  </section>
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
-  {% include '_partials/pagination.swig' %}
-{% endblock %}
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.jacklee.club","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
 
-{% block sidebar %}
-  {{ sidebar_template.render(false) }}
-{% endblock %}
+  <meta name="description" content="专注,折腾,热爱生活,泳无止境">
+<meta property="og:type" content="website">
+<meta property="og:title" content="JackLee">
+<meta property="og:url" content="https://www.jacklee.club/index.html">
+<meta property="og:site_name" content="JackLee">
+<meta property="og:description" content="专注,折腾,热爱生活,泳无止境">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="JackLee">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://www.jacklee.club/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>JackLee</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JackLee</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">专注,折腾,热爱生活,泳无止境</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-fa fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-fa fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/jackleeforce" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.jacklee.club/%E6%96%87%E6%A1%88/2021-06-02-%E4%B8%AD%E8%8B%B1%E6%96%87%E6%B7%B7%E6%8E%92%E7%A9%BA%E6%A0%BC-%E7%9B%98%E5%8F%A4%E4%B9%8B%E7%99%BD%E6%B5%85%E8%B0%88.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="JackLee">
+      <meta itemprop="description" content="专注,折腾,热爱生活,泳无止境">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackLee">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E6%96%87%E6%A1%88/2021-06-02-%E4%B8%AD%E8%8B%B1%E6%96%87%E6%B7%B7%E6%8E%92%E7%A9%BA%E6%A0%BC-%E7%9B%98%E5%8F%A4%E4%B9%8B%E7%99%BD%E6%B5%85%E8%B0%88.html" class="post-title-link" itemprop="url">中英文混排空格-盘古之白浅谈</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-06-02 14:57:46 / 修改时间：14:12:46" itemprop="dateCreated datePublished" datetime="2021-06-02T14:57:46+08:00">2021-06-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%96%87%E6%A1%88/" itemprop="url" rel="index"><span itemprop="name">文案</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          中英文混排空格-盘古之白浅谈
+出发点
+参考资料
+为什么你们就是不能加个空格呢？
+
+中英文混排空格解决方案
+
+Requirements for Chinese Text Layout 中文排版需求
+
+盘古之白
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E6%96%87%E6%A1%88/2021-06-02-%E4%B8%AD%E8%8B%B1%E6%96%87%E6%B7%B7%E6%8E%92%E7%A9%BA%E6%A0%BC-%E7%9B%98%E5%8F%A4%E4%B9%8B%E7%99%BD%E6%B5%85%E8%B0%88.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.jacklee.club/%E6%95%99%E7%A8%8B/2021-03-13-PS3+N1+%E6%A2%AF%E5%AD%90%E7%BB%84%E5%90%88%E5%AE%9E%E7%8E%B0%E5%AE%B6%E5%BA%AD%E5%86%85%E8%A7%82%E7%9C%8B%E5%85%A8%E7%90%83%E6%96%B0%E9%97%BB%E7%9B%B4%E6%92%AD.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="JackLee">
+      <meta itemprop="description" content="专注,折腾,热爱生活,泳无止境">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackLee">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E6%95%99%E7%A8%8B/2021-03-13-PS3+N1+%E6%A2%AF%E5%AD%90%E7%BB%84%E5%90%88%E5%AE%9E%E7%8E%B0%E5%AE%B6%E5%BA%AD%E5%86%85%E8%A7%82%E7%9C%8B%E5%85%A8%E7%90%83%E6%96%B0%E9%97%BB%E7%9B%B4%E6%92%AD.html" class="post-title-link" itemprop="url">PS3+N1+梯子组合实现家庭内观看全球新闻直播</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-13 21:32:46 / 修改时间：23:01:11" itemprop="dateCreated datePublished" datetime="2021-03-13T21:32:46+08:00">2021-03-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          PS3+N1+梯子组合实现家庭内观看全球新闻直播
+家用个人梯子
+近两年我使用的梯子都是通过薅 GCP或者 AWS 的VPS主机来搭建[个人梯子](./Set up the ladder.md),协议从最早的 SS 到 SSR 再到 VMess还有Trojan ,平时在公司内通过这些自建梯子访问被墙站点也还算流畅，但是回到家里后梯子就开始各种抽风，经过对路由线路的追踪，发现在公司梯子状况良好的原因是信息技术部门在内网针对这些国外梯子IP走移动或者联通的线路，而在家里走的是电信线路，使用traceroute 可以看到IP 报文走到一些 163骨干网络后就没有下文了，看来是电信做了限制。
+
+购买机场
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E6%95%99%E7%A8%8B/2021-03-13-PS3+N1+%E6%A2%AF%E5%AD%90%E7%BB%84%E5%90%88%E5%AE%9E%E7%8E%B0%E5%AE%B6%E5%BA%AD%E5%86%85%E8%A7%82%E7%9C%8B%E5%85%A8%E7%90%83%E6%96%B0%E9%97%BB%E7%9B%B4%E6%92%AD.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.jacklee.club/%E6%83%B3%E6%B3%95/2020-12-10-%E5%B9%BC%E5%84%BF%E6%95%B0%E5%AD%A6%E6%80%9D%E7%BB%B4%E4%B9%A0%E6%83%AF%E5%9F%B9%E5%85%BB.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="JackLee">
+      <meta itemprop="description" content="专注,折腾,热爱生活,泳无止境">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackLee">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E6%83%B3%E6%B3%95/2020-12-10-%E5%B9%BC%E5%84%BF%E6%95%B0%E5%AD%A6%E6%80%9D%E7%BB%B4%E4%B9%A0%E6%83%AF%E5%9F%B9%E5%85%BB.html" class="post-title-link" itemprop="url">幼儿数学思维习惯培养</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-12-10 09:32:46 / 修改时间：09:44:45" itemprop="dateCreated datePublished" datetime="2020-12-10T09:32:46+08:00">2020-12-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%83%B3%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">想法</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          闯关游戏部分
+随机数数
+ * 随机抓取一把卡片或者小玩具，扔在桌子上，要求小朋友稍微站远一点，不用手指一个个点的方式来数出总共多少卡片。
+   《培养小朋友心数能力》
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E6%83%B3%E6%B3%95/2020-12-10-%E5%B9%BC%E5%84%BF%E6%95%B0%E5%AD%A6%E6%80%9D%E7%BB%B4%E4%B9%A0%E6%83%AF%E5%9F%B9%E5%85%BB.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.jacklee.club/%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/2020-08-13-%E5%8D%87%E7%BA%A7glibc%20%E5%AF%BC%E8%87%B4%E7%9A%84locale%20%E9%97%AE%E9%A2%98.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="JackLee">
+      <meta itemprop="description" content="专注,折腾,热爱生活,泳无止境">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackLee">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/2020-08-13-%E5%8D%87%E7%BA%A7glibc%20%E5%AF%BC%E8%87%B4%E7%9A%84locale%20%E9%97%AE%E9%A2%98.html" class="post-title-link" itemprop="url">升级glibc 导致的locale 问题</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-13 10:23:46" itemprop="dateCreated datePublished" datetime="2020-08-13T10:23:46+08:00">2020-08-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-10 09:38:38" itemprop="dateModified" datetime="2020-12-10T09:38:38+08:00">2020-12-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">操作记录</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          升级glibc 导致的locale 问题
+这两天在给公司一台 Centos7 部署 NVIDIA GPU环境，发现需要升级 glibc,于是网上搜索了下教程，大概步骤如下：
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+
+
+wget http://ftp.wayne.edu/gnu/libc/glibc-2.32.tar.gz #这里我使用的是最新的 glibc 2.32 版本
+
+tar -zxvf glibc-2.32.tar.gz
+
+cd glibc-2.32
+
+mkdir build
+
+../configure  --prefix=/u
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/2020-08-13-%E5%8D%87%E7%BA%A7glibc%20%E5%AF%BC%E8%87%B4%E7%9A%84locale%20%E9%97%AE%E9%A2%98.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.jacklee.club/%E6%95%B0%E5%AD%A6/2020-05-08-%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E7%BB%9F%E8%AE%A1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="JackLee">
+      <meta itemprop="description" content="专注,折腾,热爱生活,泳无止境">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackLee">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E6%95%B0%E5%AD%A6/2020-05-08-%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E7%BB%9F%E8%AE%A1.html" class="post-title-link" itemprop="url">概率论与统计</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-05-08 10:07:46" itemprop="dateCreated datePublished" datetime="2020-05-08T10:07:46+08:00">2020-05-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-10 09:38:38" itemprop="dateModified" datetime="2020-12-10T09:38:38+08:00">2020-12-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">数学</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          # 相关概念
+方差
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E6%95%B0%E5%AD%A6/2020-05-08-%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E7%BB%9F%E8%AE%A1.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.jacklee.club/%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/2020-02-28-%E4%B8%80%E6%AC%A1%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%AD%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E7%9A%84%E6%8E%92%E6%9F%A5%E7%BB%8F%E5%8E%86.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="JackLee">
+      <meta itemprop="description" content="专注,折腾,热爱生活,泳无止境">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackLee">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/2020-02-28-%E4%B8%80%E6%AC%A1%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%AD%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E7%9A%84%E6%8E%92%E6%9F%A5%E7%BB%8F%E5%8E%86.html" class="post-title-link" itemprop="url">一次服务器中挖矿病毒的排查经历</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-02-28 12:57:46" itemprop="dateCreated datePublished" datetime="2020-02-28T12:57:46+08:00">2020-02-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-10 09:38:38" itemprop="dateModified" datetime="2020-12-10T09:38:38+08:00">2020-12-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">操作记录</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          事件记录
+由于疫情，最近一个月公司安排在家办公，早上我正在努力撸代码好好学习的时候，突然公司 IT 部门的人问我最近有没有操作过某台服务器(下文用 XXX 代替)，正好我昨天登陆上这台服务器进行过一次连通性测试，我问他怎么了？他告诉我 XXX 被阿里云系统分析出中毒了，详情见下两张图:
+
+
+
+我大吃一惊，马上登陆 XXX，执行了下top命令，发现有一个进程 Macron 几乎占用了百分百的CPU, 执行这个进程的用户正是 share，XXX服务器是被人入侵并植入恶意程序了。
+
+
+IT 部门的人委婉地告诉我，好好对自己的电脑查毒下，因为就在我登陆服务器操作后的当天，服务器就中毒了。我听完这话就笑
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/2020-02-28-%E4%B8%80%E6%AC%A1%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%AD%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E7%9A%84%E6%8E%92%E6%9F%A5%E7%BB%8F%E5%8E%86.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.jacklee.club/%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/2019-11-25-%E6%8A%BD%E5%8F%96%20git%20%E4%BB%93%E5%BA%93%E7%9A%84%E5%AD%90%E7%9B%AE%E5%BD%95%E7%8B%AC%E7%AB%8B%E6%88%90%E6%96%B0%E4%BB%93%E5%BA%93.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="JackLee">
+      <meta itemprop="description" content="专注,折腾,热爱生活,泳无止境">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackLee">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/2019-11-25-%E6%8A%BD%E5%8F%96%20git%20%E4%BB%93%E5%BA%93%E7%9A%84%E5%AD%90%E7%9B%AE%E5%BD%95%E7%8B%AC%E7%AB%8B%E6%88%90%E6%96%B0%E4%BB%93%E5%BA%93.html" class="post-title-link" itemprop="url">抽取 git 仓库的子目录独立成新仓库</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-25 11:37:46" itemprop="dateCreated datePublished" datetime="2019-11-25T11:37:46+08:00">2019-11-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-10 09:38:38" itemprop="dateModified" datetime="2020-12-10T09:38:38+08:00">2020-12-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/" itemprop="url" rel="index"><span itemprop="name">操作记录</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          前言
+项目开发中偶尔会碰到这种需求：需要把仓库中的一个子目录独立出来，成为一个全新的独立仓库。但又希望这个新仓库能保留原来所有的提交记录，方面以后查看。
+
+操作步骤
+仓库示例
+如下面的目录结构所示，要将项目仓库中 component_a 目录的代码抽取出来，独立成新仓库：
+
+1
+2
+3
+4
+5
+
+
+- project_root
+|- src
+|- components
+    |- component_a
+    |- component_b
+
+
+根据子目录新建分支
+component_a 目录的提交信息抽出为新的 branch
+
+1
+2
+
+
+cd {path/to/project_root}
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/2019-11-25-%E6%8A%BD%E5%8F%96%20git%20%E4%BB%93%E5%BA%93%E7%9A%84%E5%AD%90%E7%9B%AE%E5%BD%95%E7%8B%AC%E7%AB%8B%E6%88%90%E6%96%B0%E4%BB%93%E5%BA%93.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.jacklee.club/%E6%B8%B8%E6%B3%B3/2019-11-01-2019-10-31%20%E6%B8%B8%E6%B3%B3%E8%A7%86%E9%A2%91%E8%AE%B0%E5%BD%95.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="JackLee">
+      <meta itemprop="description" content="专注,折腾,热爱生活,泳无止境">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackLee">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E6%B8%B8%E6%B3%B3/2019-11-01-2019-10-31%20%E6%B8%B8%E6%B3%B3%E8%A7%86%E9%A2%91%E8%AE%B0%E5%BD%95.html" class="post-title-link" itemprop="url">2019-10-31 游泳视频记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-01 14:57:46" itemprop="dateCreated datePublished" datetime="2019-11-01T14:57:46+08:00">2019-11-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-10 09:38:38" itemprop="dateModified" datetime="2020-12-10T09:38:38+08:00">2020-12-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%B3%B3/" itemprop="url" rel="index"><span itemprop="name">游泳</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          地点
+三盛国际公园游泳馆
+
+泳池条件
+25米 4泳道 室内恒温
+
+拍摄设备
+4K运动相机，品牌未知，深圳华强北山寨外贸货, 相机设置为拍摄1080P 30 帧
+
+健身记录截图
+
+
+视频反馈出来的问题
+ * 自由泳整体动作不流畅，完整动作看起来像有节奏的抽搐，在水下毫无流线型。
+ * 蛙泳划臂后下潜的过深，导致前进动力都被阻力消耗。
+
+视频记录
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E6%B8%B8%E6%B3%B3/2019-11-01-2019-10-31%20%E6%B8%B8%E6%B3%B3%E8%A7%86%E9%A2%91%E8%AE%B0%E5%BD%95.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.jacklee.club/%E6%B8%B8%E6%B3%B3/2019-10-24-2019-10-23%20%E6%B8%B8%E6%B3%B3%E8%A7%86%E9%A2%91%E8%AE%B0%E5%BD%95.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="JackLee">
+      <meta itemprop="description" content="专注,折腾,热爱生活,泳无止境">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackLee">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E6%B8%B8%E6%B3%B3/2019-10-24-2019-10-23%20%E6%B8%B8%E6%B3%B3%E8%A7%86%E9%A2%91%E8%AE%B0%E5%BD%95.html" class="post-title-link" itemprop="url">2019-10-23 游泳视频记录</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-24 14:57:46" itemprop="dateCreated datePublished" datetime="2019-10-24T14:57:46+08:00">2019-10-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-10 09:38:38" itemprop="dateModified" datetime="2020-12-10T09:38:38+08:00">2020-12-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B8%E6%B3%B3/" itemprop="url" rel="index"><span itemprop="name">游泳</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          地点
+三盛国际公园游泳馆
+
+泳池条件
+25米 4泳道 室内恒温
+
+拍摄设备
+iphone 6s, 相机设置为拍摄1080P 30 帧
+
+健身记录截图
+
+
+视频反馈出来的问题
+ * 换气的时候，头抬有点高，眼睛往后方天上看，没有做到一只眼在水下，一只眼在水上，导致阻力过大。
+ * 空中移臂未做到完整高肘。
+ * 打腿不行，尤其是左腿，严重的锄头脚。
+
+视频记录
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E6%B8%B8%E6%B3%B3/2019-10-24-2019-10-23%20%E6%B8%B8%E6%B3%B3%E8%A7%86%E9%A2%91%E8%AE%B0%E5%BD%95.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.jacklee.club/%E5%B7%A5%E4%BD%9C/2019-10-11-%E5%85%AC%E5%8F%B8IT%E6%9D%A5%E9%82%AE%E4%BB%B6%E5%91%8A%E7%9F%A5%E6%88%91%E7%94%B5%E8%84%91%E4%B8%AD%E6%AF%92.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="JackLee">
+      <meta itemprop="description" content="专注,折腾,热爱生活,泳无止境">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackLee">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/%E5%B7%A5%E4%BD%9C/2019-10-11-%E5%85%AC%E5%8F%B8IT%E6%9D%A5%E9%82%AE%E4%BB%B6%E5%91%8A%E7%9F%A5%E6%88%91%E7%94%B5%E8%84%91%E4%B8%AD%E6%AF%92.html" class="post-title-link" itemprop="url">公司IT来邮件告知我电脑中毒</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-10-11 11:11:53" itemprop="dateCreated datePublished" datetime="2019-10-11T11:11:53+08:00">2019-10-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-10 09:38:38" itemprop="dateModified" datetime="2020-12-10T09:38:38+08:00">2020-12-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">工作</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          中毒
+昨天下午收到公司 IT 来邮件说，在公司深信服系统中监测出我的电脑疑似中毒:
+
+
+看到邮件，第一时间觉得不可思议，我用苹果 OSX 系统，中毒概率应该比较低吧。不过深入想了下，自己平时下载软件，能直接下载 DMG 的，就不在 AppStore里面下，平时如果没有认真防范，中招也不是不可能。
+
+中了什么病毒
+根据邮件里面的关键字，谷歌了一下：
+
+
+
+看来公司IT真没冤枉我，这个 Mokes 有专门针对苹果 OSX 的版本。
+
+查毒杀毒
+自从用了苹果系统，就从来没装过杀毒软件，在上一家公司的时候，公司 IT 部门会定期检查员工个人电脑上是否有装杀毒软件，每次临查，我都是提前溜到公司天台去躲避
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/%E5%B7%A5%E4%BD%9C/2019-10-11-%E5%85%AC%E5%8F%B8IT%E6%9D%A5%E9%82%AE%E4%BB%B6%E5%91%8A%E7%9F%A5%E6%88%91%E7%94%B5%E8%84%91%E4%B8%AD%E6%AF%92.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JackLee"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">JackLee</p>
+  <div class="site-description" itemprop="description">专注,折腾,热爱生活,泳无止境</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">30</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jackleeforce" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jackleeforce" rel="noopener" target="_blank"><i class="fa fa-fw fa-fab fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/jackleeforce" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;jackleeforce" rel="noopener" target="_blank"><i class="fa fa-fw fa-fab fa-twitter"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackLee</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
