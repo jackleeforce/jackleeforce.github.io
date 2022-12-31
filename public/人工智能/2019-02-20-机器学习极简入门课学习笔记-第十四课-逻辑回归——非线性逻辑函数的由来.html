@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.jacklee.club","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="逻辑回归 Logistic Regression （LR） 逻辑回归的模型函数 $ h_\theta(x) &#x3D; \frac{1}{1+e^{-\theta^Tx}} $    借助数学工具解决问题的方法  * 首先，将目标问题定义为一个函数；          * 之后，选取最简单的假设作为其具体形式；          * 然后，用事实数据验证该形式，确认有效后沿用，形成数学模型；">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习极简入门课学习笔记-第十四课(逻辑回归——非线性逻辑函数的由来)">
+<meta property="og:url" content="https://www.jacklee.club/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2019-02-20-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%8D%81%E5%9B%9B%E8%AF%BE-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E2%80%94%E2%80%94%E9%9D%9E%E7%BA%BF%E6%80%A7%E9%80%BB%E8%BE%91%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%B1%E6%9D%A5.html">
+<meta property="og:site_name" content="JackLee">
+<meta property="og:description" content="逻辑回归 Logistic Regression （LR） 逻辑回归的模型函数 $ h_\theta(x) &#x3D; \frac{1}{1+e^{-\theta^Tx}} $    借助数学工具解决问题的方法  * 首先，将目标问题定义为一个函数；          * 之后，选取最简单的假设作为其具体形式；          * 然后，用事实数据验证该形式，确认有效后沿用，形成数学模型；">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.jacklee.club/assets/image-20190221144340225.png">
+<meta property="article:published_time" content="2019-02-20T07:26:43.000Z">
+<meta property="article:modified_time" content="2020-12-10T01:38:38.785Z">
+<meta property="article:author" content="JackLee">
+<meta property="article:tag" content="机器学习,人工智能,AI,学习笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.jacklee.club/assets/image-20190221144340225.png">
+
+<link rel="canonical" href="https://www.jacklee.club/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2019-02-20-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%8D%81%E5%9B%9B%E8%AF%BE-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E2%80%94%E2%80%94%E9%9D%9E%E7%BA%BF%E6%80%A7%E9%80%BB%E8%BE%91%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%B1%E6%9D%A5.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>机器学习极简入门课学习笔记-第十四课(逻辑回归——非线性逻辑函数的由来) | JackLee</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JackLee</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">专注,折腾,热爱生活,泳无止境</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-fa fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-fa fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/jackleeforce" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.jacklee.club/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2019-02-20-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%8D%81%E5%9B%9B%E8%AF%BE-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E2%80%94%E2%80%94%E9%9D%9E%E7%BA%BF%E6%80%A7%E9%80%BB%E8%BE%91%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%B1%E6%9D%A5.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="JackLee">
+      <meta itemprop="description" content="专注,折腾,热爱生活,泳无止境">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackLee">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          机器学习极简入门课学习笔记-第十四课(逻辑回归——非线性逻辑函数的由来)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-02-20 15:26:43" itemprop="dateCreated datePublished" datetime="2019-02-20T15:26:43+08:00">2019-02-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-12-10 09:38:38" itemprop="dateModified" datetime="2020-12-10T09:38:38+08:00">2020-12-10</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index"><span itemprop="name">人工智能</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="逻辑回归-Logistic-Regression-（LR）"><a href="#逻辑回归-Logistic-Regression-（LR）" class="headerlink" title="逻辑回归 Logistic Regression （LR）"></a>逻辑回归 Logistic Regression （LR）</h4><p>逻辑回归的模型函数 $ h_\theta(x) = \frac{1}{1+e^{-\theta^Tx}} $</p>
+<p><img src="../assets/image-20190221144340225.png" alt="image-20190221144340225"></p>
+<h4 id="借助数学工具解决问题的方法"><a href="#借助数学工具解决问题的方法" class="headerlink" title="借助数学工具解决问题的方法"></a>借助数学工具解决问题的方法</h4><ul>
+<li><p>首先，将目标问题定义为一个函数；</p>
+</li>
+<li><p>之后，选取最简单的假设作为其具体形式；</p>
+</li>
+<li><p>然后，用事实数据验证该形式，确认有效后沿用，形成数学模型；</p>
+</li>
+<li><p>一旦当前采用的数学模型出现问题，则对其进行修正（添加修正项），同样借助事实数据来求取修正项的形式，形成新的（升级版）数学模型。</p>
+</li>
+</ul>
+<p><strong>直接、简单、基于现有成果</strong>——这也是人类在现实当中解决问题的各种有效方法的共同特征。</p>
+<p>我们现在新面临的问题，有些此时尚未得到理想的 Solution。它们最终的解决，也必然遵循“直接、简单、基于现有成果”的原则。</p>
+<p>“直接、简单”还比较抽象，但“现有成果”却是看得见摸得着的。</p>
+<p>虽然随着新技术的发展，具体的新问题不断涌现，但实际上，技术发展的过程，整体而言是把问题的“量”扩大化的过程。</p>
+<p>如果抽象层次更高一些，我们就不难发现，这些问题其实和以往的问题有许多共性所在。其实，新问题不过是旧问题在新情况、新场景下的变形而已。</p>
+<p>既然如此，那些已经在实践中证明对于旧问题有效的方法、措施，也必然能够对解决新问题有所贡献。</p>
+<p>还有，当一个方法应用到实践中去之后，在最初阶段有效是一种经验，随着经验的积累，研究者的深入探索，经验是有可能被提升为理论的。</p>
+<p>理论相对于经验，更加清晰可描述、可解释；抽象层次更高，通用性更强，可以被应用到更广泛的领域。<strong>学习理论相对于学习经验具备更长久也更深入的有效性。</strong></p>
+<p>这也就是时至今日我们还要学习几千年前的几何定理、几百年前的物理化学定律的缘故。</p>
+<p>机器学习就是这样一套已经逐步在形成理论的方法。相比而言，更新的深度学习还处在经验阶段。</p>
+<p>尽管今时今日从媒体传播的角度来看，深度学习是一个更热门的领域，对比起来，似乎机器学习“过时了”，“没用了”。</p>
+<p>但在解决人们的实际问题上，机器学习的应用远比深度学习广泛、深入、可控。</p>
+<p>而且，机器学习是深度学习的基础。如果连最简单的机器学习模型都没有掌握，又怎么可能了解深度神经网络的原理和运作？</p>
+<p>如果连 How it works 都不知道，就拿来当黑盒使用，那么无论是什么工具，你对它的应用就变成了“按一下电钮”那么简单，你个人的价值又如何体现呢？</p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/jackleeforce">
+            <span class="icon">
+              <i class="fa fa-fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD-AI-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="tag"># 机器学习,人工智能,AI,学习笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2019-02-20-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%8D%81%E4%B8%89%E8%AF%BE-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%86%E7%B1%BB%E5%99%A8%E2%80%94%E2%80%94%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1.html" rel="prev" title="机器学习极简入门课学习笔记-第十三课(朴素贝叶斯分类器——条件概率的参数估计)">
+      <i class="fa fa-chevron-left"></i> 机器学习极简入门课学习笔记-第十三课(朴素贝叶斯分类器——条件概率的参数估计)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2019-02-21-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%8D%81%E4%BA%94%E8%AF%BE-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E2%80%94%E2%80%94%E7%94%A8%E6%9D%A5%E5%81%9A%E5%88%86%E7%B1%BB%E7%9A%84%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B.html" rel="next" title="机器学习极简入门课学习笔记-第十五课(逻辑回归——用来做分类的回归模型)">
+      机器学习极简入门课学习笔记-第十五课(逻辑回归——用来做分类的回归模型) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92-Logistic-Regression-%EF%BC%88LR%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">逻辑回归 Logistic Regression （LR）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%80%9F%E5%8A%A9%E6%95%B0%E5%AD%A6%E5%B7%A5%E5%85%B7%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">借助数学工具解决问题的方法</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JackLee"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">JackLee</p>
+  <div class="site-description" itemprop="description">专注,折腾,热爱生活,泳无止境</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jackleeforce" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jackleeforce" rel="noopener" target="_blank"><i class="fa fa-fw fa-fab fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/jackleeforce" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;jackleeforce" rel="noopener" target="_blank"><i class="fa fa-fw fa-fab fa-twitter"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackLee</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-61ceb30e0e6cbc8b" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
