@@ -17,61 +17,61 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.jacklee.live","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"me.verygood.work","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="导数与微分 导数     导函数    特殊函数的导数公式 幂函数的导数公式 幂函数f(x) &#x3D; xn (n ϵ R ) 的导数公式：  (xn)‘ &#x3D; nxn-1  三角函数的导数公式  * 正弦函数 f(x) &#x3D; sin x 的导数公式         * (sin x)‘ &#x3D; cos x         即正弦函数的导数是余弦函数。          * 余弦函数 f(x) &#x3D; cos x">
 <meta property="og:type" content="article">
 <meta property="og:title" content="高等数学(同济大学第七版)学习笔记-第二章-导数与微分">
-<meta property="og:url" content="https://www.jacklee.live/%E6%95%B0%E5%AD%A6/2019-02-13-%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6(%E5%90%8C%E6%B5%8E%E5%A4%A7%E5%AD%A6%E7%AC%AC%E4%B8%83%E7%89%88)%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%AF%BC%E6%95%B0%E4%B8%8E%E5%BE%AE%E5%88%86.html">
+<meta property="og:url" content="https://me.verygood.work/%E6%95%B0%E5%AD%A6/2019-02-13-%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6(%E5%90%8C%E6%B5%8E%E5%A4%A7%E5%AD%A6%E7%AC%AC%E4%B8%83%E7%89%88)%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%AF%BC%E6%95%B0%E4%B8%8E%E5%BE%AE%E5%88%86.html">
 <meta property="og:site_name" content="JackLee">
 <meta property="og:description" content="导数与微分 导数     导函数    特殊函数的导数公式 幂函数的导数公式 幂函数f(x) &#x3D; xn (n ϵ R ) 的导数公式：  (xn)‘ &#x3D; nxn-1  三角函数的导数公式  * 正弦函数 f(x) &#x3D; sin x 的导数公式         * (sin x)‘ &#x3D; cos x         即正弦函数的导数是余弦函数。          * 余弦函数 f(x) &#x3D; cos x">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076b3nrg8j315m0gb41f.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076gyjstbj314n06bdgq.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076h31f0rj31620l5djf.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076io14cwj316008awfj.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076h6y89pj30xw03qq2u.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076h9etdbj30q603umx2.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076hbuzcmj30ny03c745.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076hegnf8j30p603ejr9.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076hhs0ytj312q06cjry.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076hk9t90j31dm0aiq3s.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076hn20abj314g0u0gqa.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076hs900rj31b40bs405.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076hv4fr3j31bg098dgu.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076hy586sj31d00723zg.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076j5fi0uj31bc080wgn.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076i0o7afj30u00xxdj1.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076i4uh6fj31cw0u0wjs.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076i7mnl5j31cr0u041y.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076ialmgyj31840u0teu.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076til6x3j31n609q0wj.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076uaa8gbj312v0u0av7.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076uts9iej31na03uac2.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcly1g0774zu78oj31n20gc7da.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/006tKfTcly1g0779xuog7j31o80kcdyj.jpg">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/image-20190225140815451.png">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/image-20190225142940264.png">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/image-20190225145839109.png">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/image-20190225150408590.png">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/image-20190225155625620.png">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/image-20190225162538307.png">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/image-20190225162947986.png">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/image-20190225215204263.png">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/image-20190225220000609.png">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/image-20190225220312418.png">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/image-20190225221015562.png">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/image-20190225221715871.png">
-<meta property="og:image" content="https://www.jacklee.live/assets/images/image-20190225221405367.png">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076b3nrg8j315m0gb41f.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076gyjstbj314n06bdgq.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076h31f0rj31620l5djf.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076io14cwj316008awfj.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076h6y89pj30xw03qq2u.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076h9etdbj30q603umx2.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076hbuzcmj30ny03c745.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076hegnf8j30p603ejr9.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076hhs0ytj312q06cjry.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076hk9t90j31dm0aiq3s.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076hn20abj314g0u0gqa.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076hs900rj31b40bs405.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076hv4fr3j31bg098dgu.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076hy586sj31d00723zg.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076j5fi0uj31bc080wgn.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076i0o7afj30u00xxdj1.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076i4uh6fj31cw0u0wjs.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076i7mnl5j31cr0u041y.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076ialmgyj31840u0teu.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076til6x3j31n609q0wj.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076uaa8gbj312v0u0av7.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076uts9iej31na03uac2.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcly1g0774zu78oj31n20gc7da.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/006tKfTcly1g0779xuog7j31o80kcdyj.jpg">
+<meta property="og:image" content="https://me.verygood.work/assets/images/image-20190225140815451.png">
+<meta property="og:image" content="https://me.verygood.work/assets/images/image-20190225142940264.png">
+<meta property="og:image" content="https://me.verygood.work/assets/images/image-20190225145839109.png">
+<meta property="og:image" content="https://me.verygood.work/assets/images/image-20190225150408590.png">
+<meta property="og:image" content="https://me.verygood.work/assets/images/image-20190225155625620.png">
+<meta property="og:image" content="https://me.verygood.work/assets/images/image-20190225162538307.png">
+<meta property="og:image" content="https://me.verygood.work/assets/images/image-20190225162947986.png">
+<meta property="og:image" content="https://me.verygood.work/assets/images/image-20190225215204263.png">
+<meta property="og:image" content="https://me.verygood.work/assets/images/image-20190225220000609.png">
+<meta property="og:image" content="https://me.verygood.work/assets/images/image-20190225220312418.png">
+<meta property="og:image" content="https://me.verygood.work/assets/images/image-20190225221015562.png">
+<meta property="og:image" content="https://me.verygood.work/assets/images/image-20190225221715871.png">
+<meta property="og:image" content="https://me.verygood.work/assets/images/image-20190225221405367.png">
 <meta property="article:published_time" content="2019-02-13T08:23:03.000Z">
 <meta property="article:modified_time" content="2020-12-10T01:38:38.787Z">
 <meta property="article:author" content="JackLee">
 <meta property="article:tag" content="数学,学习笔记">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.jacklee.live/assets/images/006tKfTcgy1g076b3nrg8j315m0gb41f.jpg">
+<meta name="twitter:image" content="https://me.verygood.work/assets/images/006tKfTcgy1g076b3nrg8j315m0gb41f.jpg">
 
-<link rel="canonical" href="https://www.jacklee.live/%E6%95%B0%E5%AD%A6/2019-02-13-%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6(%E5%90%8C%E6%B5%8E%E5%A4%A7%E5%AD%A6%E7%AC%AC%E4%B8%83%E7%89%88)%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%AF%BC%E6%95%B0%E4%B8%8E%E5%BE%AE%E5%88%86.html">
+<link rel="canonical" href="https://me.verygood.work/%E6%95%B0%E5%AD%A6/2019-02-13-%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6(%E5%90%8C%E6%B5%8E%E5%A4%A7%E5%AD%A6%E7%AC%AC%E4%B8%83%E7%89%88)%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%AF%BC%E6%95%B0%E4%B8%8E%E5%BE%AE%E5%88%86.html">
 
 
 <script id="page-configurations">
@@ -220,7 +220,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.jacklee.live/%E6%95%B0%E5%AD%A6/2019-02-13-%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6(%E5%90%8C%E6%B5%8E%E5%A4%A7%E5%AD%A6%E7%AC%AC%E4%B8%83%E7%89%88)%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%AF%BC%E6%95%B0%E4%B8%8E%E5%BE%AE%E5%88%86.html">
+    <link itemprop="mainEntityOfPage" href="https://me.verygood.work/%E6%95%B0%E5%AD%A6/2019-02-13-%E9%AB%98%E7%AD%89%E6%95%B0%E5%AD%A6(%E5%90%8C%E6%B5%8E%E5%A4%A7%E5%AD%A6%E7%AC%AC%E4%B8%83%E7%89%88)%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%AF%BC%E6%95%B0%E4%B8%8E%E5%BE%AE%E5%88%86.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -543,7 +543,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-fa fa-heart"></i>
   </span>

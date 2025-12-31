@@ -17,13 +17,13 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.jacklee.live","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"me.verygood.work","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="决策树 决策树是一种非常基础又常见的机器学习模型。  一棵决策树（Decision Tree）是一个树结构（可以是二叉树或非二叉树），每个非叶节点对应一个特征，该节点的每个分支代表这个特征的一个取值，而每个叶节点存放一个类别或一个回归函数。  使用决策树进行决策的过程就是从根节点开始，提取出待分类项中相应的特征，按照其值选择输出分支，依次向下，直到到达叶子节点，将叶子节点存放的类别或者回归函数的运">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习极简入门课学习笔记-第十六课(决策树——既能分类又能回归的模型)">
-<meta property="og:url" content="https://www.jacklee.live/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2019-02-22-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%8D%81%E5%85%AD%E8%AF%BE-%E5%86%B3%E7%AD%96%E6%A0%91%E2%80%94%E2%80%94%E6%97%A2%E8%83%BD%E5%88%86%E7%B1%BB%E5%8F%88%E8%83%BD%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A8%A1%E5%9E%8B.html">
+<meta property="og:url" content="https://me.verygood.work/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2019-02-22-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%8D%81%E5%85%AD%E8%AF%BE-%E5%86%B3%E7%AD%96%E6%A0%91%E2%80%94%E2%80%94%E6%97%A2%E8%83%BD%E5%88%86%E7%B1%BB%E5%8F%88%E8%83%BD%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A8%A1%E5%9E%8B.html">
 <meta property="og:site_name" content="JackLee">
 <meta property="og:description" content="决策树 决策树是一种非常基础又常见的机器学习模型。  一棵决策树（Decision Tree）是一个树结构（可以是二叉树或非二叉树），每个非叶节点对应一个特征，该节点的每个分支代表这个特征的一个取值，而每个叶节点存放一个类别或一个回归函数。  使用决策树进行决策的过程就是从根节点开始，提取出待分类项中相应的特征，按照其值选择输出分支，依次向下，直到到达叶子节点，将叶子节点存放的类别或者回归函数的运">
 <meta property="og:locale" content="zh_CN">
@@ -33,7 +33,7 @@
 <meta property="article:tag" content="机器学习,人工智能,AI,学习笔记">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://www.jacklee.live/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2019-02-22-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%8D%81%E5%85%AD%E8%AF%BE-%E5%86%B3%E7%AD%96%E6%A0%91%E2%80%94%E2%80%94%E6%97%A2%E8%83%BD%E5%88%86%E7%B1%BB%E5%8F%88%E8%83%BD%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A8%A1%E5%9E%8B.html">
+<link rel="canonical" href="https://me.verygood.work/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2019-02-22-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%8D%81%E5%85%AD%E8%AF%BE-%E5%86%B3%E7%AD%96%E6%A0%91%E2%80%94%E2%80%94%E6%97%A2%E8%83%BD%E5%88%86%E7%B1%BB%E5%8F%88%E8%83%BD%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A8%A1%E5%9E%8B.html">
 
 
 <script id="page-configurations">
@@ -182,7 +182,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.jacklee.live/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2019-02-22-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%8D%81%E5%85%AD%E8%AF%BE-%E5%86%B3%E7%AD%96%E6%A0%91%E2%80%94%E2%80%94%E6%97%A2%E8%83%BD%E5%88%86%E7%B1%BB%E5%8F%88%E8%83%BD%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A8%A1%E5%9E%8B.html">
+    <link itemprop="mainEntityOfPage" href="https://me.verygood.work/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2019-02-22-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%8D%81%E5%85%AD%E8%AF%BE-%E5%86%B3%E7%AD%96%E6%A0%91%E2%80%94%E2%80%94%E6%97%A2%E8%83%BD%E5%88%86%E7%B1%BB%E5%8F%88%E8%83%BD%E5%9B%9E%E5%BD%92%E7%9A%84%E6%A8%A1%E5%9E%8B.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -431,7 +431,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2022</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-fa fa-heart"></i>
   </span>
