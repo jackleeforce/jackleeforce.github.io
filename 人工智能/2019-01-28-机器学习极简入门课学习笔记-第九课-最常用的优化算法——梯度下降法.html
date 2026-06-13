@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.0.0">
+<meta name="generator" content="Hexo 8.1.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"me.verygood.work","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="目标函数，损失函数，代价函数 机器学习中的目标函数、损失函数、代价函数有什么区别  凸函数  * 同济大学高等数学定义  设 f(x) 在区间 I 上连续，如果对 I 上任意两点 x_1,x_2 ，恒有   那么称 f(x) 在 I 上的图形是（向上）凹的（或凹弧）；如果恒有   那么称 f(x) 在 I 上的图形是（向上）凸的（或凸弧）。  这个定义是直接从几何直观上得来的。如果在曲线弧上面任意">
+  <meta name="description" content="目标函数，损失函数，代价函数机器学习中的目标函数、损失函数、代价函数有什么区别 凸函数 同济大学高等数学定义">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习极简入门课学习笔记-第九课(最常用的优化算法——梯度下降法)">
 <meta property="og:url" content="https://me.verygood.work/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2019-01-28-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E4%B9%9D%E8%AF%BE-%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E4%BC%98%E5%8C%96%E7%AE%97%E6%B3%95%E2%80%94%E2%80%94%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95.html">
 <meta property="og:site_name" content="JackLee">
-<meta property="og:description" content="目标函数，损失函数，代价函数 机器学习中的目标函数、损失函数、代价函数有什么区别  凸函数  * 同济大学高等数学定义  设 f(x) 在区间 I 上连续，如果对 I 上任意两点 x_1,x_2 ，恒有   那么称 f(x) 在 I 上的图形是（向上）凹的（或凹弧）；如果恒有   那么称 f(x) 在 I 上的图形是（向上）凸的（或凸弧）。  这个定义是直接从几何直观上得来的。如果在曲线弧上面任意">
+<meta property="og:description" content="目标函数，损失函数，代价函数机器学习中的目标函数、损失函数、代价函数有什么区别 凸函数 同济大学高等数学定义">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://me.verygood.work/assets/images/006tNc79ly1fzm5cg0apyj30go01nq33.jpg">
 <meta property="og:image" content="https://me.verygood.work/assets/images/006tNc79ly1fzm5dm8d45j30go01nq33.jpg">
@@ -243,10 +243,10 @@
 <h4 id="凸函数"><a href="#凸函数" class="headerlink" title="凸函数"></a>凸函数</h4><ul>
 <li>同济大学高等数学定义</li>
 </ul>
-<p>设 f(x) 在区间 I 上连续，如果对 I 上任意两点 x_1,x_2 ，恒有<br><img src="../assets/images/006tNc79ly1fzm5cg0apyj30go01nq33.jpg"></p>
-<p>那么称 f(x) 在 I 上的图形是（向上）凹的（或凹弧）；如果恒有<br><img src="../assets/images/006tNc79ly1fzm5dm8d45j30go01nq33.jpg"></p>
+<p>设 f(x) 在区间 I 上连续，如果对 I 上任意两点 x_1,x_2 ，恒有<br><img src="/../assets/images/006tNc79ly1fzm5cg0apyj30go01nq33.jpg"></p>
+<p>那么称 f(x) 在 I 上的图形是（向上）凹的（或凹弧）；如果恒有<br><img src="/../assets/images/006tNc79ly1fzm5dm8d45j30go01nq33.jpg"></p>
 <p>那么称 f(x) 在 I 上的图形是（向上）凸的（或凸弧）。</p>
-<p>这个定义是直接从几何直观上得来的。如果在曲线弧上面任意取两点，连接这两点的弦总是在弧段的上方，那么曲线就是（向上）凹的，反之也有可类比的结论。取一个特殊的点，即弦的中点，曲线的凹凸性可以用弦的中点与曲线弧上具有相同坐标的点的位置关系来描述。<br><img src="../assets/images/006tNc79ly1fzm5epe4q9j30d705s3z3.jpg"></p>
+<p>这个定义是直接从几何直观上得来的。如果在曲线弧上面任意取两点，连接这两点的弦总是在弧段的上方，那么曲线就是（向上）凹的，反之也有可类比的结论。取一个特殊的点，即弦的中点，曲线的凹凸性可以用弦的中点与曲线弧上具有相同坐标的点的位置关系来描述。<br><img src="/../assets/images/006tNc79ly1fzm5epe4q9j30d705s3z3.jpg"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">前人的工作已经保证了经典机器学习模型的目标函数都是凸函数。未来在应用中构建自己的目标函数，那么千万记得在直接应用任何优化算法之前，应该先确定它是凸函数。</span><br></pre></td></tr></table></figure>
 
 <h4 id="超参数"><a href="#超参数" class="headerlink" title="超参数"></a>超参数</h4><p>算法不能学习，需要人为设定的参数，就叫做超参数。</p>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.0.0">
+<meta name="generator" content="Hexo 8.1.2">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"me.verygood.work","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="向量空间模型(Vector Space Model，VSM)  * 向量指一个同时具有大小和方向的几何對象。  * 向量空间模型负责将格式（文字、图片、音频、视频）转化为一个个向量，即将真实世界里的各种对象转换为计算机可以识别的数值。  特征向量(Feature Vector) 描述一份样本数据中所有的特征所转换出来的向量叫做这份数据的特征向量  特征工程 特征工程，包括以下两个步骤：   1.">
+  <meta name="description" content="向量空间模型(Vector Space Model，VSM) 向量指一个同时具有大小和方向的几何對象。 向量空间模型负责将格式（文字、图片、音频、视频）转化为一个个向量，即将真实世界里的各种对象转换为计算机可以识别的数值。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习极简入门课学习笔记-第六课（机器学习三要素之数据、模型、算法）">
 <meta property="og:url" content="https://me.verygood.work/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/2019-01-25-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%9E%81%E7%AE%80%E5%85%A5%E9%97%A8%E8%AF%BE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E7%AC%AC%E5%85%AD%E8%AF%BE%EF%BC%88%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%89%E8%A6%81%E7%B4%A0%E4%B9%8B%E6%95%B0%E6%8D%AE%E3%80%81%E6%A8%A1%E5%9E%8B%E3%80%81%E7%AE%97%E6%B3%95%EF%BC%89.html">
 <meta property="og:site_name" content="JackLee">
-<meta property="og:description" content="向量空间模型(Vector Space Model，VSM)  * 向量指一个同时具有大小和方向的几何對象。  * 向量空间模型负责将格式（文字、图片、音频、视频）转化为一个个向量，即将真实世界里的各种对象转换为计算机可以识别的数值。  特征向量(Feature Vector) 描述一份样本数据中所有的特征所转换出来的向量叫做这份数据的特征向量  特征工程 特征工程，包括以下两个步骤：   1.">
+<meta property="og:description" content="向量空间模型(Vector Space Model，VSM) 向量指一个同时具有大小和方向的几何對象。 向量空间模型负责将格式（文字、图片、音频、视频）转化为一个个向量，即将真实世界里的各种对象转换为计算机可以识别的数值。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-01-25T06:43:31.000Z">
 <meta property="article:modified_time" content="2020-12-10T01:38:38.781Z">
@@ -246,11 +246,11 @@
 <li>确定用什么方式表达这些特征。</li>
 </ol>
 <h4 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h4><p>模型是机器学习的结果，这个学习过程，称为训练（Train）。</p>
-<p>一个已经训练好的模型，可以被理解成一个函数： y=f(x)。</p>
+<p>一个已经训练好的模型，可以被理解成一个函数： y&#x3D;f(x)。</p>
 <p>我们把数据（对应其中的 x）输入进去，得到输出结果（对应其中的 y）。</p>
 <p>这个输出结果可能是一个数值（回归），也可能是一个标签（分类），它会告诉我们一些事情。</p>
 <h4 id="训练"><a href="#训练" class="headerlink" title="训练"></a>训练</h4><p>训练就是：根据已经被指定的模型类型，结合训练数据，计算出其中各个参数的具体取值的过程。</p>
-<h4 id="损失函数（Loss-Function）"><a href="#损失函数（Loss-Function）" class="headerlink" title="损失函数（Loss Function）"></a>损失函数（Loss Function）</h4><p>在有监督学习过程中，经过对一份训练数据的学习后，得到一个模型y‘=f(x)，再对另外一份验证数据运用这个模型计算出来得到的标签值y’与验证数据正确的标签y的差别，记做L（y, y’）= L(y, f(x))。</p>
+<h4 id="损失函数（Loss-Function）"><a href="#损失函数（Loss-Function）" class="headerlink" title="损失函数（Loss Function）"></a>损失函数（Loss Function）</h4><p>在有监督学习过程中，经过对一份训练数据的学习后，得到一个模型y‘&#x3D;f(x)，再对另外一份验证数据运用这个模型计算出来得到的标签值y’与验证数据正确的标签y的差别，记做L（y, y’）&#x3D; L(y, f(x))。</p>
 <h4 id="代价函数（Cost-Function）"><a href="#代价函数（Cost-Function）" class="headerlink" title="代价函数（Cost Function）"></a>代价函数（Cost Function）</h4><p>代价函数一般写作：J（theta）。<br>???</p>
 
     </div>
