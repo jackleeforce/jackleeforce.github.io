@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"me.verygood.work","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="说明：本文不是论文全文翻译，而是基于原论文的中文精读、结构化转述和学习笔记。原论文可从 arXiv 和 NeurIPS Proceedings 阅读。  论文信息 论文标题：Attention Is All You Need 中文标题：注意力机制就是你所需要的一切 作者：Ashish Vaswani、Noam Shazeer、Niki P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Attention Is All You Need 中文精读">
+<meta property="og:url" content="https://me.verygood.work/%E7%BB%8F%E5%85%B8%E8%AE%BA%E6%96%87/2026-06-13-Attention-Is-All-You-Need-%E4%B8%AD%E6%96%87%E7%B2%BE%E8%AF%BB.html">
+<meta property="og:site_name" content="JackLee">
+<meta property="og:description" content="说明：本文不是论文全文翻译，而是基于原论文的中文精读、结构化转述和学习笔记。原论文可从 arXiv 和 NeurIPS Proceedings 阅读。  论文信息 论文标题：Attention Is All You Need 中文标题：注意力机制就是你所需要的一切 作者：Ashish Vaswani、Noam Shazeer、Niki P">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-13T14:46:40.000Z">
+<meta property="article:modified_time" content="2026-06-13T14:48:37.753Z">
+<meta property="article:author" content="JackLee">
+<meta property="article:tag" content="Transformer,注意力机制,深度学习,论文精读,人工智能">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://me.verygood.work/%E7%BB%8F%E5%85%B8%E8%AE%BA%E6%96%87/2026-06-13-Attention-Is-All-You-Need-%E4%B8%AD%E6%96%87%E7%B2%BE%E8%AF%BB.html">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Attention Is All You Need 中文精读 | JackLee</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">JackLee</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">专注,折腾,热爱生活,泳无止境</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-fa fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-fa fa-archive"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/jackleeforce" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://me.verygood.work/%E7%BB%8F%E5%85%B8%E8%AE%BA%E6%96%87/2026-06-13-Attention-Is-All-You-Need-%E4%B8%AD%E6%96%87%E7%B2%BE%E8%AF%BB.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="JackLee">
+      <meta itemprop="description" content="专注,折腾,热爱生活,泳无止境">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="JackLee">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Attention Is All You Need 中文精读
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-06-13 22:46:40 / 修改时间：22:48:37" itemprop="dateCreated datePublished" datetime="2026-06-13T22:46:40+08:00">2026-06-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%BB%8F%E5%85%B8%E8%AE%BA%E6%96%87/" itemprop="url" rel="index"><span itemprop="name">经典论文</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>说明：本文不是论文全文翻译，而是基于原论文的中文精读、结构化转述和学习笔记。原论文可从 arXiv 和 NeurIPS Proceedings 阅读。</p>
+</blockquote>
+<h2 id="论文信息"><a href="#论文信息" class="headerlink" title="论文信息"></a>论文信息</h2><ul>
+<li>论文标题：Attention Is All You Need</li>
+<li>中文标题：注意力机制就是你所需要的一切</li>
+<li>作者：Ashish Vaswani、Noam Shazeer、Niki Parmar、Jakob Uszkoreit、Llion Jones、Aidan N. Gomez、Lukasz Kaiser、Illia Polosukhin</li>
+<li>首次提交：2017-06-12</li>
+<li>arXiv 版本：1706.03762，v7 修订于 2023-08-02</li>
+<li>会议：NIPS 2017，也就是现在的 NeurIPS</li>
+<li>原文链接：<ul>
+<li><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">https://arxiv.org/abs/1706.03762</a></li>
+<li><a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/7181-attention-is-all-you-need">https://proceedings.neurips.cc/paper/7181-attention-is-all-you-need</a></li>
+<li><a target="_blank" rel="noopener" href="https://research.google/pubs/attention-is-all-you-need/">https://research.google/pubs/attention-is-all-you-need/</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="一句话概括"><a href="#一句话概括" class="headerlink" title="一句话概括"></a>一句话概括</h2><p>这篇论文提出了 Transformer：一种完全基于注意力机制的序列到序列模型。它不再依赖循环神经网络或者卷积神经网络处理序列，而是通过自注意力机制直接建模序列中任意两个位置之间的关系。</p>
+<p>这件事的影响非常大。以前处理句子时，模型常常按时间步一步一步读入词语；Transformer 则允许每个词同时“看见”句子中的其他词。这样不仅能捕捉长距离依赖，还更适合 GPU 并行计算。</p>
+<h2 id="摘要转述"><a href="#摘要转述" class="headerlink" title="摘要转述"></a>摘要转述</h2><p>在这篇论文之前，主流的序列转换模型大多是编码器-解码器结构，并且依赖复杂的循环网络或者卷积网络。表现较好的模型会额外加入注意力机制，把编码器和解码器连接起来。</p>
+<p>论文作者提出了一个新的、更简单的网络架构：Transformer。它只依赖注意力机制，不再使用循环结构和卷积结构。实验显示，在机器翻译任务中，Transformer 不仅翻译质量更高，而且并行能力更强，训练时间也明显更短。</p>
+<p>论文报告的关键结果包括：</p>
+<ul>
+<li>WMT 2014 英译德任务达到 28.4 BLEU，超过当时已有最好结果。</li>
+<li>WMT 2014 英译法任务达到 41.8 BLEU，使用 8 块 GPU 训练 3.5 天。</li>
+<li>模型还能迁移到英语成分句法分析任务，说明它不只是一个机器翻译专用结构。</li>
+</ul>
+<h2 id="论文要解决的问题"><a href="#论文要解决的问题" class="headerlink" title="论文要解决的问题"></a>论文要解决的问题</h2><p>传统 RNN、LSTM、GRU 适合处理序列，因为它们天然按顺序读取输入。但这种顺序性也带来了两个问题。</p>
+<p>第一，训练并行度差。第 t 个位置的计算依赖第 t-1 个位置的状态，很难把整句话完全并行起来。</p>
+<p>第二，长距离依赖难。虽然 LSTM 和 GRU 缓解了梯度消失问题，但如果两个相关词隔得很远，信息仍然需要经过很多步传递。</p>
+<p>CNN 可以通过卷积层堆叠扩大感受野，部分解决并行问题，但想覆盖长距离关系仍然需要多层网络，路径长度不会天然变短。</p>
+<p>Transformer 的核心想法是：直接让序列中任意两个位置建立联系。也就是说，一个词不必等信息沿着时间线慢慢传过来，而是可以通过注意力机制一次性参考所有位置。</p>
+<h2 id="Transformer-的整体结构"><a href="#Transformer-的整体结构" class="headerlink" title="Transformer 的整体结构"></a>Transformer 的整体结构</h2><p>Transformer 仍然采用编码器-解码器架构：</p>
+<ul>
+<li>编码器负责把输入序列转换成连续表示。</li>
+<li>解码器根据编码器输出和已经生成的目标序列，逐步预测下一个词。</li>
+</ul>
+<p>论文中的基础模型使用 6 层编码器和 6 层解码器。每一层都不是单一模块，而是由注意力、前馈网络、残差连接和层归一化组成。</p>
+<p>编码器层包含两个主要子层：</p>
+<ul>
+<li>多头自注意力层</li>
+<li>逐位置前馈网络</li>
+</ul>
+<p>解码器层包含三个主要子层：</p>
+<ul>
+<li>带遮罩的多头自注意力层</li>
+<li>编码器-解码器注意力层</li>
+<li>逐位置前馈网络</li>
+</ul>
+<p>这里的“遮罩”很关键。生成目标句子时，模型不能偷看未来位置，所以解码器自注意力只能关注当前位置和它之前的位置。</p>
+<h2 id="自注意力：让每个词自己找上下文"><a href="#自注意力：让每个词自己找上下文" class="headerlink" title="自注意力：让每个词自己找上下文"></a>自注意力：让每个词自己找上下文</h2><p>自注意力的目标是：对序列中的每个位置，计算它应该关注其他位置的程度，然后把这些位置的信息加权汇总。</p>
+<p>论文使用 Query、Key、Value 来描述这个过程：</p>
+<ul>
+<li>Query：当前位置发出的查询，表示“我想找什么信息”。</li>
+<li>Key：每个位置提供的索引，表示“我有什么特征可供匹配”。</li>
+<li>Value：每个位置真正被汇总的信息内容。</li>
+</ul>
+<p>计算过程可以写成下面这样：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Attention(Q, K, V) = softmax(QK^T / sqrt(d_k)) V</span><br></pre></td></tr></table></figure>
+
+<p>理解这个公式时，可以分成三步：</p>
+<ol>
+<li>Q 和 K 做点积，得到每个位置之间的相关性分数。</li>
+<li>除以 sqrt(d_k)，避免维度较大时点积分数过大，导致 softmax 过于尖锐。</li>
+<li>用 softmax 得到权重，再对 V 做加权求和。</li>
+</ol>
+<p>这样，每个词的输出表示都不再只来自自己，而是来自整句话中所有相关位置的加权组合。</p>
+<h2 id="多头注意力：不是只从一个角度看句子"><a href="#多头注意力：不是只从一个角度看句子" class="headerlink" title="多头注意力：不是只从一个角度看句子"></a>多头注意力：不是只从一个角度看句子</h2><p>如果只做一次注意力，模型只能在一个表示空间里学习关系。论文提出多头注意力，把 Q、K、V 投影到多个子空间中，分别做注意力计算，再把结果拼接起来。</p>
+<p>直观地看，不同注意力头可以学习不同类型的关系。例如：</p>
+<ul>
+<li>有的头关注主语和谓语之间的关系。</li>
+<li>有的头关注代词和它指代的名词。</li>
+<li>有的头关注相邻词的短距离组合。</li>
+<li>有的头关注远距离依赖。</li>
+</ul>
+<p>论文中的基础模型使用 8 个注意力头。每个头的维度较小，多个头合在一起保持整体计算量可控。</p>
+<h2 id="位置编码：没有-RNN-后，模型怎么知道顺序"><a href="#位置编码：没有-RNN-后，模型怎么知道顺序" class="headerlink" title="位置编码：没有 RNN 后，模型怎么知道顺序"></a>位置编码：没有 RNN 后，模型怎么知道顺序</h2><p>Transformer 不按顺序递归处理输入，因此模型本身并不知道词的位置。如果只把词向量送进去，“我喜欢你”和“你喜欢我”在词集合层面很像，但语义完全不同。</p>
+<p>为了解决这个问题，论文加入了位置编码。位置编码会和词嵌入相加，让每个词向量同时包含词义信息和位置信息。</p>
+<p>论文使用正弦和余弦函数构造位置编码。这样做有两个好处：</p>
+<ul>
+<li>不需要学习额外的位置参数。</li>
+<li>模型可能更容易外推到比训练时更长的序列。</li>
+</ul>
+<p>可以把位置编码理解成给每个词贴上一个“坐标标签”。注意力机制负责找关系，位置编码负责告诉模型这些词在序列中的相对和绝对位置。</p>
+<h2 id="前馈网络、残差连接和层归一化"><a href="#前馈网络、残差连接和层归一化" class="headerlink" title="前馈网络、残差连接和层归一化"></a>前馈网络、残差连接和层归一化</h2><p>每个注意力子层之后，Transformer 都会接一个逐位置前馈网络。它对每个位置独立应用同一个两层全连接网络：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FFN(x) = max(0, xW1 + b1)W2 + b2</span><br></pre></td></tr></table></figure>
+
+<p>这个模块不在不同位置之间传递信息，它的作用是对每个位置的表示做非线性变换，提升模型表达能力。</p>
+<p>此外，论文在每个子层周围使用残差连接和层归一化：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LayerNorm(x + Sublayer(x))</span><br></pre></td></tr></table></figure>
+
+<p>残差连接让深层网络更容易训练，层归一化让表示分布更稳定。这两个设计后来也成了大多数 Transformer 变体的基础组件。</p>
+<h2 id="为什么-Transformer-更快"><a href="#为什么-Transformer-更快" class="headerlink" title="为什么 Transformer 更快"></a>为什么 Transformer 更快</h2><p>论文比较了三类结构在三个维度上的差异：</p>
+<ul>
+<li>每层计算复杂度</li>
+<li>可并行计算的程度</li>
+<li>长距离依赖的路径长度</li>
+</ul>
+<p>RNN 的问题是顺序依赖强，无法高效并行。CNN 的并行性更好，但远距离位置之间需要经过多层卷积才能建立联系。自注意力则可以在一层中直接连接任意两个位置。</p>
+<p>自注意力的一个代价是序列长度上的二次复杂度。也就是说，长度为 n 的序列需要计算 n 乘 n 的注意力矩阵。对于机器翻译这类中等长度序列，这个代价是可以接受的；但对于超长上下文任务，后来的很多研究都在改进注意力的计算复杂度。</p>
+<h2 id="训练细节"><a href="#训练细节" class="headerlink" title="训练细节"></a>训练细节</h2><p>论文中有几个后来被广泛沿用的训练细节。</p>
+<p>学习率调度使用 warmup：训练初期逐步升高学习率，之后按步数的反平方根衰减。这样可以避免一开始参数还不稳定时学习率过大。</p>
+<p>优化器使用 Adam，并设置了特定的 beta 参数和 epsilon。正则化方面，模型使用 dropout，并采用 label smoothing。label smoothing 会让目标分布不再是绝对的 one-hot，从而降低模型过度自信的问题。</p>
+<p>这些细节不是 Transformer 思想本身，但对复现实验结果非常重要。</p>
+<h2 id="实验结果怎么看"><a href="#实验结果怎么看" class="headerlink" title="实验结果怎么看"></a>实验结果怎么看</h2><p>论文的核心实验是机器翻译：</p>
+<ul>
+<li>英译德任务：Transformer base 达到 27.3 BLEU，Transformer big 达到 28.4 BLEU。</li>
+<li>英译法任务：Transformer big 达到 41.8 BLEU。</li>
+</ul>
+<p>更重要的是训练成本。论文强调 Transformer 质量高、并行性强，训练所需时间显著少于当时一些强基线模型。</p>
+<p>论文还把 Transformer 用到英语成分句法分析任务上，结果说明这个架构具有一定通用性，不只是为翻译任务做的专门工程。</p>
+<h2 id="这篇论文真正重要的地方"><a href="#这篇论文真正重要的地方" class="headerlink" title="这篇论文真正重要的地方"></a>这篇论文真正重要的地方</h2><p>这篇论文的重要性不只在于拿到了更高的 BLEU 分数，而在于它改变了序列建模的默认范式。</p>
+<p>过去，处理序列时很自然会想到 RNN：因为语言有顺序，所以模型也按顺序处理。Transformer 提出的观点更激进：顺序不一定要靠递归结构表达，可以把顺序作为位置编码，把依赖关系交给注意力机制。</p>
+<p>这个设计带来几个长期影响：</p>
+<ul>
+<li>训练可以大规模并行，适合现代 GPU&#x2F;TPU。</li>
+<li>模型更容易扩展到大参数量和大数据。</li>
+<li>自注意力提供了统一的序列建模接口。</li>
+<li>后续的 BERT、GPT、T5 等模型都可以看作 Transformer 架构的不同使用方式。</li>
+</ul>
+<p>从今天回头看，Transformer 是大语言模型、代码模型、多模态模型的重要技术基础之一。</p>
+<h2 id="阅读这篇论文时容易卡住的点"><a href="#阅读这篇论文时容易卡住的点" class="headerlink" title="阅读这篇论文时容易卡住的点"></a>阅读这篇论文时容易卡住的点</h2><p>第一，不要把 attention 理解成“模型真的在解释自己”。注意力权重可以帮助观察模型关注了哪些位置，但它不等同于严格因果解释。</p>
+<p>第二，多头注意力不是简单重复计算。多个头通过不同线性投影进入不同表示空间，理论上能捕捉多种关系。</p>
+<p>第三，位置编码不是可有可无。没有位置编码，自注意力本身对输入顺序不敏感，模型很难区分同一组词的不同排列。</p>
+<p>第四，解码器里的 mask 是生成任务的基本约束。训练时目标句子已知，但模型预测第 t 个词时不能看到第 t+1 个词之后的内容。</p>
+<p>第五，Transformer 的强大并不代表注意力没有成本。标准自注意力对序列长度是二次复杂度，所以长上下文仍然是工程和研究上的重点问题。</p>
+<h2 id="对我的学习启发"><a href="#对我的学习启发" class="headerlink" title="对我的学习启发"></a>对我的学习启发</h2><p>如果把这篇论文当成入门材料，最值得抓住的不是每个超参数，而是三个核心设计：</p>
+<ul>
+<li>用自注意力替代递归，把任意位置之间的依赖路径缩短到一步。</li>
+<li>用多头机制让模型从多个表示子空间理解序列关系。</li>
+<li>用位置编码补上非递归模型缺失的顺序信息。</li>
+</ul>
+<p>理解了这三点，再看后来的 BERT、GPT、ViT、T5，就会发现它们虽然任务不同、训练目标不同、规模不同，但底层骨架有很强的连续性。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>Vaswani et al., Attention Is All You Need, arXiv: <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1706.03762">https://arxiv.org/abs/1706.03762</a></li>
+<li>NeurIPS Proceedings: <a target="_blank" rel="noopener" href="https://proceedings.neurips.cc/paper/7181-attention-is-all-you-need">https://proceedings.neurips.cc/paper/7181-attention-is-all-you-need</a></li>
+<li>Google Research publication page: <a target="_blank" rel="noopener" href="https://research.google/pubs/attention-is-all-you-need/">https://research.google/pubs/attention-is-all-you-need/</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>欢迎关注我的其它发布渠道</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="https://twitter.com/jackleeforce">
+            <span class="icon">
+              <i class="fa fa-fab fa-twitter"></i>
+            </span>
+
+            <span class="label">Twitter</span>
+          </a>
+        </div>
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/atom.xml">
+            <span class="icon">
+              <i class="fa fa-fa fa-rss"></i>
+            </span>
+
+            <span class="label">RSS</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Transformer-%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0-%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB-%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" rel="tag"># Transformer,注意力机制,深度学习,论文精读,人工智能</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/%E6%80%BB%E7%BB%93/2025-12-31-2025%20%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93.html" rel="prev" title="2025 个人年度总结">
+      <i class="fa fa-chevron-left"></i> 2025 个人年度总结
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E4%BF%A1%E6%81%AF"><span class="nav-number">1.</span> <span class="nav-text">论文信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%A6%82%E6%8B%AC"><span class="nav-number">2.</span> <span class="nav-text">一句话概括</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81%E8%BD%AC%E8%BF%B0"><span class="nav-number">3.</span> <span class="nav-text">摘要转述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BA%E6%96%87%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">论文要解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformer-%E7%9A%84%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">Transformer 的整体结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%EF%BC%9A%E8%AE%A9%E6%AF%8F%E4%B8%AA%E8%AF%8D%E8%87%AA%E5%B7%B1%E6%89%BE%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="nav-number">6.</span> <span class="nav-text">自注意力：让每个词自己找上下文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E5%A4%B4%E6%B3%A8%E6%84%8F%E5%8A%9B%EF%BC%9A%E4%B8%8D%E6%98%AF%E5%8F%AA%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%A7%92%E5%BA%A6%E7%9C%8B%E5%8F%A5%E5%AD%90"><span class="nav-number">7.</span> <span class="nav-text">多头注意力：不是只从一个角度看句子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81%EF%BC%9A%E6%B2%A1%E6%9C%89-RNN-%E5%90%8E%EF%BC%8C%E6%A8%A1%E5%9E%8B%E6%80%8E%E4%B9%88%E7%9F%A5%E9%81%93%E9%A1%BA%E5%BA%8F"><span class="nav-number">8.</span> <span class="nav-text">位置编码：没有 RNN 后，模型怎么知道顺序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E9%A6%88%E7%BD%91%E7%BB%9C%E3%80%81%E6%AE%8B%E5%B7%AE%E8%BF%9E%E6%8E%A5%E5%92%8C%E5%B1%82%E5%BD%92%E4%B8%80%E5%8C%96"><span class="nav-number">9.</span> <span class="nav-text">前馈网络、残差连接和层归一化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-Transformer-%E6%9B%B4%E5%BF%AB"><span class="nav-number">10.</span> <span class="nav-text">为什么 Transformer 更快</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E7%BB%86%E8%8A%82"><span class="nav-number">11.</span> <span class="nav-text">训练细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%E6%80%8E%E4%B9%88%E7%9C%8B"><span class="nav-number">12.</span> <span class="nav-text">实验结果怎么看</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%99%E7%AF%87%E8%AE%BA%E6%96%87%E7%9C%9F%E6%AD%A3%E9%87%8D%E8%A6%81%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="nav-number">13.</span> <span class="nav-text">这篇论文真正重要的地方</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%85%E8%AF%BB%E8%BF%99%E7%AF%87%E8%AE%BA%E6%96%87%E6%97%B6%E5%AE%B9%E6%98%93%E5%8D%A1%E4%BD%8F%E7%9A%84%E7%82%B9"><span class="nav-number">14.</span> <span class="nav-text">阅读这篇论文时容易卡住的点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E6%88%91%E7%9A%84%E5%AD%A6%E4%B9%A0%E5%90%AF%E5%8F%91"><span class="nav-number">15.</span> <span class="nav-text">对我的学习启发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">16.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JackLee"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">JackLee</p>
+  <div class="site-description" itemprop="description">专注,折腾,热爱生活,泳无止境</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">35</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/jackleeforce" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;jackleeforce" rel="noopener" target="_blank"><i class="fa fa-fw fa-fab fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/jackleeforce" title="Twitter → https:&#x2F;&#x2F;twitter.com&#x2F;jackleeforce" rel="noopener" target="_blank"><i class="fa fa-fw fa-fab fa-twitter"></i>Twitter</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JackLee</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+  <div class="addthis_inline_share_toolbox">
+    <script src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-61ceb30e0e6cbc8b" async="async"></script>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
